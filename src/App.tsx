@@ -11,21 +11,18 @@ export const App: React.FC = () => {
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
-
-    if (query === '') {
-      setListOfPeople([...peopleFromServer]);
-    }
-
-    if (
+    setSelectPerson(null);
+    setSelect(false);
+    setListOfPeople(
       [...peopleFromServer].filter(people =>
-        people.name.includes(`${query}`, 0),
-      ).length === peopleFromServer.length
-    ) {
-      setListOfPeople([]);
-    } else {
-      setListOfPeople(
-        [...listOfPeople].filter(people => people.name.includes(`${query}`, 0)),
-      );
+        people.name.includes(`${event.target.value}`),
+      ),
+    );
+
+    if (event.target.value === '') {
+      setListOfPeople([...peopleFromServer]);
+
+      return;
     }
   };
 
